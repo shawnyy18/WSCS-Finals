@@ -34,26 +34,19 @@ export default function Orders(){
 									<ul>
 									
 										{
-										item.productsOrdered.map((subitem) => {
-
-											return (
-												<li key={subitem._id}>
-													<Row>
-														<Col xs={3} md={2}>
-															<img
-																src={subitem.img && subitem.img.trim().length > 0 ? subitem.img : "https://via.placeholder.com/80x80?text=No+Image"}
-																alt={subitem.productName}
-																style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-															/>
-														</Col>
-														<Col xs={9} md={10}>
-															{subitem.productName} - Quantity: {subitem.quantity}
-														</Col>
-													</Row>
-												</li>
-											);
-
-										})
+										item.productsOrdered.map((subitem) => (
+											<div key={subitem.productId || subitem._id} className="order-item d-flex align-items-center mb-2">
+												<img
+													src={subitem.img && subitem.img.trim().length > 0 ? subitem.img : 'https://via.placeholder.com/100x80?text=No+Image'}
+													alt={subitem.productName}
+													style={{ width: '100px', height: '80px', objectFit: 'cover', marginRight: '10px', borderRadius: '8px', border: '1px solid #ccc' }}
+												/>
+												<div>
+													<span style={{ fontWeight: 'bold' }}>{subitem.productName}</span>
+													<span className="ml-2">- Quantity: {subitem.quantity}</span>
+												</div>
+											</div>
+										))
 
 									}
 											

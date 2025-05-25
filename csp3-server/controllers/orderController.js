@@ -33,17 +33,27 @@ module.exports.checkout = (req, res) => {
 	.catch(err => res.status(500).send({ error: "Internal Server Error", details: err}))  
 }
 
-module.exports.getMyOrders = (req,res) => {
-	return Order.find({userId: req.user.id})
-	.then(orders => {
-		if(orders.length > 0){
-			return res.status(200).send({orders})
-		} else {
-			return res.status(404).send({ error:"No Orders Found" })
-		}
-	})
-	.catch(err => res.status(500).send({ message: "Error in Find", details: err}))  
-}
+module.exports.getMyOrders = (req, res) => {
+    return Order.find({ userId: req.user.id })
+        .then(async (orders) => {
+            const detailedOrders = await Promise.all(
+                orders.map(async (order) => {
+                    const detailedProducts = await Promise.all(
+                        order.productsOrdered.map(async (item) => {
+                            const product = await Product.findById(item.productId);
+                            return {
+                                ...item._doc,
+                                img: product ? product.img : ""
+                            };
+                        })
+                    );
+                    return { ...order._doc, productsOrdered: detailedProducts };
+                })
+            );
+            res.status(200).send({ orders: detailedOrders });
+        })
+        .catch(err => res.status(500).send({ message: "Error in Find", details: err }));
+};
 
 module.exports.getAllOrders = (req,res) => {
 	return Order.find()

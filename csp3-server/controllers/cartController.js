@@ -6,9 +6,24 @@ const bcrypt = require("bcryptjs");
 
 module.exports.getCart = (req, res) => {
 
-    return Cart.findOne({userId: req.user.id })
-    .then((cart) => res.status(200).send( cart ))
-    .catch(err => res.status(500).send({ error: 'Internal Server Error' }))
+    return Cart.findOne({ userId: req.user.id })
+        .then(async (cart) => {
+            if (!cart) return res.status(404).send({ error: "No Cart" });
+
+            // For each item, fetch the product image from the Product collection
+            const productDetails = await Promise.all(
+                cart.cartItems.map(async (item) => {
+                    const product = await Product.findById(item.productId);
+                    return {
+                        ...item._doc,
+                        img: product ? product.img : ""
+                    };
+                })
+            );
+
+            res.status(200).send({ ...cart._doc, cartItems: productDetails });
+        })
+        .catch(err => res.status(500).send({ error: 'Internal Server Error' }));
 
 }
 

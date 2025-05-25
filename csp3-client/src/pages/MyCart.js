@@ -131,33 +131,24 @@ export default function MyCart() {
   return (
     <Container>
       <h2 className="text-center my-4">Your Shopping Cart</h2>
-      <Row>
-        {cart.map(item => (
-          <Col xs={12} md={6} lg={4} key={item.productId} className="mb-4">
-            <Card className="h-100">
-              <Link to={`/products/${item.productId}`}>
-                <Card.Img
-                  variant="top"
-                  src={item.img && item.img.trim().length > 0 ? item.img : "https://via.placeholder.com/300x200?text=No+Image"}
-                  style={{ objectFit: 'cover', height: '200px' }}
-                  alt={item.productName}
-                />
-              </Link>
-              <Card.Body>
-                <Card.Title>
-                  <Link to={`/products/${item.productId}`}>{item.productName}</Link>
-                </Card.Title>
-                <Card.Text>Price: ₱{item.price}</Card.Text>
-                <Card.Text>Quantity: {item.quantity}</Card.Text>
-                <Card.Text>Subtotal: ₱{item.subtotal}</Card.Text>
-                <Button variant="danger" onClick={() => removeFromCart(item.productId)}>
-                  Remove
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      {cart.map(item => (
+        <div key={item.productId} className="cart-item d-flex align-items-center mb-3">
+          <img
+            src={item.img && item.img.trim().length > 0 ? item.img : 'https://via.placeholder.com/100x80?text=No+Image'}
+            alt={item.productName}
+            style={{ width: '100px', height: '80px', objectFit: 'cover', marginRight: '10px', borderRadius: '8px', border: '1px solid #ccc' }}
+          />
+          <div>
+            <span style={{ fontWeight: 'bold' }}>{item.productName}</span>
+            <div>Price: ₱{item.price}</div>
+            <div>Quantity: {item.quantity}</div>
+            <div>Subtotal: ₱{item.subtotal}</div>
+            <Button variant="danger" onClick={() => removeFromCart(item.productId)}>
+              Remove
+            </Button>
+          </div>
+        </div>
+      ))}
       <h3 className="text-right">Total: ₱{total}</h3>
       <Button variant="success" block onClick={checkout}>
         Checkout
