@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Accordion, Jumbotron } from 'react-bootstrap';
+import { Container, Card, Accordion, Jumbotron, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
@@ -16,12 +16,8 @@ export default function Orders(){
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data)
 			const { orders } = data;
 
-			console.log(orders)
-
-			
 			const myOrders = orders.map((item, index) => {
 				return(
 					<Card key={item._id}>
@@ -40,14 +36,20 @@ export default function Orders(){
 										{
 										item.productsOrdered.map((subitem) => {
 
-											fetch(`${ process.env.REACT_APP_API_URL}/products/${subitem.productId}`)
-											.then(res => res.json())
-											.then(data => {
-											});
-
 											return (
 												<li key={subitem._id}>
-													{subitem.productName} - Quantity: {subitem.quantity}
+													<Row>
+														<Col xs={3} md={2}>
+															<img
+																src={subitem.img && subitem.img.trim().length > 0 ? subitem.img : "https://via.placeholder.com/80x80?text=No+Image"}
+																alt={subitem.productName}
+																style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+															/>
+														</Col>
+														<Col xs={9} md={10}>
+															{subitem.productName} - Quantity: {subitem.quantity}
+														</Col>
+													</Row>
 												</li>
 											);
 

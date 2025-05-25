@@ -1,4 +1,3 @@
-//[Section] Activity
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
@@ -13,6 +12,11 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: [true, 'Course Price is Required']
+    },
+    img: {
+        type: String,
+        required: false,
+        default: ''
     },
     isActive: {
         type: Boolean,

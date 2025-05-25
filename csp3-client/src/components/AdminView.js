@@ -14,6 +14,7 @@ export default function AdminView(){
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [price, setPrice] = useState(0);
+	const [img, setImg] = useState(""); // add this line
 	const [showAdd, setShowAdd] = useState(false);
 	const [showEdit, setShowEdit] = useState(false);
 	const [toggle, setToggle] = useState(false);
@@ -23,7 +24,6 @@ export default function AdminView(){
 	const closeAdd = () => setShowAdd(false);
 
 	const openEdit = (productId) => {
-
 		setId(productId);
 
 		fetch(`${ process.env.REACT_APP_API_URL }/products/${ productId }`)
@@ -32,6 +32,7 @@ export default function AdminView(){
 			setName(data.name);
 			setDescription(data.description);
 			setPrice(data.price);
+			setImg(data.img || ""); // set image URL
 		});
 
 		setShowEdit(true);
@@ -43,6 +44,7 @@ export default function AdminView(){
 		setName("");
 		setDescription("");
 		setPrice(0);
+		setImg(""); // reset image URL
 		setShowEdit(false);
 
 	};
@@ -60,7 +62,8 @@ export default function AdminView(){
 			body: JSON.stringify({
 				name: name,
 				description: description,
-				price: price
+				price: price,
+				img: img // add image URL
 			})
 		})
 		.then(res => res.json())
@@ -79,6 +82,7 @@ export default function AdminView(){
 				setName("");
 				setDescription("");
 				setPrice(0);
+				setImg(""); // reset image URL
 				closeAdd();
 
 			} else {
@@ -112,7 +116,8 @@ export default function AdminView(){
 			body: JSON.stringify({
 				name: name,
 				description: description,
-				price: price
+				price: price,
+				img: img // add image URL
 			})
 
 		})
@@ -132,6 +137,7 @@ export default function AdminView(){
 				setName("");
 				setDescription("");
 				setPrice(0);
+				setImg(""); // reset image URL
 				closeEdit();
 
 			} else {
@@ -170,7 +176,8 @@ export default function AdminView(){
         // If there is a single order, create an array with that order
 				ordersArray = [data.order];
 			} else {
-				console.error('Invalid or empty JSON data in response:', data);
+				// Only log if you want to debug
+				// console.warn('No orders found.');
 			}
 
 			const allOrders = ordersArray.map((order, index) => {
@@ -229,6 +236,7 @@ export default function AdminView(){
 	};
 
 	useEffect(() => {
+		
 
 		const activateProduct = (productId) => {
 
@@ -446,6 +454,16 @@ export default function AdminView(){
 								/>
 							</Form.Group>
 
+							<Form.Group controlId="productImg">
+								<Form.Label>Image URL:</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="Enter image URL"
+									value={img}
+									onChange={e => setImg(e.target.value)}
+								/>
+							</Form.Group>
+
 					</Modal.Body>
 					<Modal.Footer>
 						<Button variant="secondary" onClick={closeAdd}>
@@ -496,6 +514,16 @@ export default function AdminView(){
 									value={price}
 									onChange={e => setPrice(e.target.value)}
 									required
+								/>
+							</Form.Group>
+
+							<Form.Group controlId="productImg">
+								<Form.Label>Image URL:</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="Enter image URL"
+									value={img}
+									onChange={e => setImg(e.target.value)}
 								/>
 							</Form.Group>
 

@@ -14,6 +14,7 @@ export default function Specific(){
 	const [description, setDescription] = useState("");
 	const [qty, setQty] = useState(1);
 	const [price, setPrice] = useState(0);
+	const [img, setImg] = useState(""); // <-- add this line
 
  useEffect(() => {
     fetch(`${ process.env.REACT_APP_API_URL}/products/${ productId }`)
@@ -23,6 +24,7 @@ export default function Specific(){
         setName(data.name);
         setDescription(data.description);
         setPrice(data.price);
+        setImg(data.img || ""); // <-- add this line
       });
   }, [productId]);
 
@@ -45,10 +47,11 @@ export default function Specific(){
       },
       body: JSON.stringify({
         productId: id,
+        productName: name,
+        price: price,
         quantity: qty,
         subtotal: price * qty,
-        productName: name, // Include productName in the request
-        price, // Include price in the request
+        img: img // <-- make sure this is included
       }),
     })
       .then((response) => {
@@ -97,6 +100,12 @@ export default function Specific(){
 		<Container>
 			<Card className="mt-5">
 				<Card.Header className="bg-secondary text-white text-center pb-0"><h4>{name}</h4></Card.Header>
+				<Card.Img
+					variant="top"
+					src={img && img.length > 0 ? img : "https://via.placeholder.com/300x200?text=No+Image"}
+					style={{ objectFit: 'cover', height: '300px' }}
+					alt={name}
+				/>
 				<Card.Body>
 					<Card.Text>{description}</Card.Text>
 					<h6>

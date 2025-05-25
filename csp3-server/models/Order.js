@@ -26,6 +26,11 @@ const orderSchema = new mongoose.Schema({
             subtotal: {
                 type: Number,
                 required: [true, 'subtotal is Required']
+            },
+            img: {
+                type: String,
+                required: false,
+                default: ''
             }
         }
     ],
