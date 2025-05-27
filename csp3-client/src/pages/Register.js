@@ -90,15 +90,36 @@ export default function Register(){
         willRedirect === true ?
                 <Redirect to={{pathname: '/login', state: { from: 'register'}}}/>
             :
-                <Row className="justify-content-center">
-                    <Col xs md="6">
-                        <h2 className="text-center my-4">Register</h2>
-                        <Card>
+                <Row 
+                    className="justify-content-center bg-light" 
+                    style={{ 
+                        backgroundImage: 'url("https://i.ytimg.com/vi/jPNgoDkgYX4/maxresdefault.jpg")', 
+                        backgroundSize: 'cover', 
+                        backgroundRepeat: 'no-repeat', 
+                        minHeight: '100vh', 
+                        paddingTop: '50px', 
+                        position: 'relative' 
+                    }}
+                >
+                    <div 
+                        style={{ 
+                            position: 'absolute', 
+                            top: 0, 
+                            left: 0, 
+                            width: '100%', 
+                            height: '100%', 
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+                            zIndex: -1 
+                        }}
+                    ></div>
+                    <Col xs={12} md={8} lg={6}>
+                        <h2 className="text-center my-4 text-primary fw-bold">Register</h2>
+                        <Card className="shadow-lg" style={{ width: '100%' }}>
                             <Form onSubmit={e => registerUser(e)}>
-                                <Card.Body>
+                                <Card.Body style={{ backgroundColor: '#ffffff' }}>
 
                                     <Form.Group controlId="firstName">
-                                        <Form.Label>First Name:</Form.Label>
+                                        <Form.Label className="text-primary">First Name:</Form.Label>
                                         <Form.Control
                                             type="text"
                                             placeholder="Enter your First Name"
@@ -109,7 +130,7 @@ export default function Register(){
                                     </Form.Group>
 
                                     <Form.Group controlId="lastName">
-                                        <Form.Label>Last Name:</Form.Label>
+                                        <Form.Label className="text-primary">Last Name:</Form.Label>
                                         <Form.Control
                                             type="text"
                                             placeholder="Enter your Last Name"
@@ -120,7 +141,7 @@ export default function Register(){
                                     </Form.Group>
 
                                     <Form.Group controlId="userEmail">
-                                        <Form.Label>Email:</Form.Label>
+                                        <Form.Label className="text-primary">Email:</Form.Label>
                                         <Form.Control
                                             type="email"
                                             placeholder="Enter your email"
@@ -131,7 +152,7 @@ export default function Register(){
                                     </Form.Group>
 
                                     <Form.Group controlId="mobileNo">
-                                        <Form.Label>Mobile Number:</Form.Label>
+                                        <Form.Label className="text-primary">Mobile Number:</Form.Label>
                                         <Form.Control
                                             type="text"
                                             placeholder="Enter your 11 digit mobile number"
@@ -142,7 +163,7 @@ export default function Register(){
                                     </Form.Group>
 
                                     <Form.Group controlId="password1">
-                                        <Form.Label>Password:</Form.Label>
+                                        <Form.Label className="text-primary">Password:</Form.Label>
                                         <Form.Control
                                             type="password"
                                             placeholder="Enter your password"
@@ -153,7 +174,7 @@ export default function Register(){
                                     </Form.Group>
 
                                     <Form.Group controlId="password2">
-                                        <Form.Label>Verify Password:</Form.Label>
+                                        <Form.Label className="text-primary">Verify Password:</Form.Label>
                                         <Form.Control
                                             type="password"
                                             placeholder="Verify your password"
@@ -164,10 +185,10 @@ export default function Register(){
                                     </Form.Group>
 
                                 </Card.Body>
-                                <Card.Footer>
+                                <Card.Footer style={{ backgroundColor: '#e6f7ff' }}>
                                     {isActive === true ? 
                                             <Button 
-                                                variant="success"
+                                                variant="primary"
                                                 type="submit"
                                                 block
                                             >
@@ -176,7 +197,7 @@ export default function Register(){
                                         : 
                                             error1 === true || error2 === true ? 
                                                 <Button
-                                                    variant="danger"
+                                                    variant="primary"
                                                     type="submit"
                                                     disabled
                                                     block
@@ -197,7 +218,12 @@ export default function Register(){
                             </Form>
                         </Card>
                         <p className="text-center mt-3">
-                            Already have an account? <Link to={{pathname: '/login', state: { from: 'register'}}}>Click here</Link> to log in.
+                            <span className="px-2 py-1 rounded" style={{ backgroundColor: '#fff3cd', color: '#856404', fontWeight: 'bold' }}>
+                                Already have an account?{' '}
+                                <Link to={{pathname: '/login', state: { from: 'register'}}} className="text-primary" style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
+                                    Click here
+                                </Link> to log in.
+                            </span>
                         </p>
                     </Col>
                 </Row>

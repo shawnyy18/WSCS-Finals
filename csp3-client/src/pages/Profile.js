@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import UserContext from '../UserContext';
 import { Redirect, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import ResetPassword from '../components/ResetPassword';	
+import ResetPassword from '../components/ResetPassword';
 
 export default function Profile() {
   const { user } = useContext(UserContext);
@@ -18,8 +18,6 @@ export default function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
-
-      	console.log(data)
         if (data) {
           setDetails(data);
         } else if (data.error === 'User not found') {
@@ -28,7 +26,6 @@ export default function Profile() {
             icon: 'error',
             text: 'Something went wrong. Please contact us for assistance.',
           });
-          // Redirect to the desired page upon error
           history.push('/profile');
         } else {
           Swal.fire({
@@ -36,7 +33,6 @@ export default function Profile() {
             icon: 'error',
             text: 'Something went wrong. Please contact us for assistance.',
           });
-          // Redirect to the desired page upon error
           history.push('/profile');
         }
       });
@@ -47,30 +43,40 @@ export default function Profile() {
       {user.id === null ? (
         <Redirect to="/profile" />
       ) : (
-        <>
-          <Row>
-            <Col className="p-5 bg-primary text-white">
-              <h1 className="my-5">Profile</h1>
-              <h2 className="mt-3">{`${details.firstName} ${details.lastName}`}</h2>
-              <hr />
-              <h4>Contacts</h4>
-              <ul>
-                <li>Email: {details.email}</li>
-                <li>Mobile No: {details.mobileNo}</li>
-              </ul>
-            </Col>
-          </Row>
-          <Row className="pt-4 mt-4">
-            <Col>
-             	<ResetPassword />
-            </Col>
-          </Row>
-          <Row className="pt-4 mt-4">
-            <Col>
-            
-            </Col>
-          </Row>
-        </>
+        <Row className="justify-content-center" style={{ background: "#233787", minHeight: "100vh" }}>
+          <Col xs={12} md={8} lg={6} className="d-flex align-items-center justify-content-center">
+            <Card
+              className="w-100 shadow-lg"
+              style={{
+                borderRadius: "24px",
+                background: "#FFFFFF",
+                border: "2px solid #FBD709",
+                marginTop: "60px",
+                marginBottom: "60px"
+              }}
+            >
+              <Card.Body>
+                <h1 className="text-center mb-4" style={{ color: "#233787", fontWeight: 700 }}>Profile</h1>
+                <h3 className="text-center mb-3" style={{ color: "#CD2029", fontWeight: 600 }}>
+                  {`${details.firstName || ''} ${details.lastName || ''}`}
+                </h3>
+                <hr style={{ borderTop: "2px solid #FBD709" }} />
+                <h5 className="mt-4 mb-3" style={{ color: "#233787" }}>Contacts</h5>
+                <ul className="list-unstyled mb-4">
+                  <li style={{ color: "#151216" }}>
+                    <strong>Email:</strong> {details.email}
+                  </li>
+                  <li style={{ color: "#151216" }}>
+                    <strong>Mobile No:</strong> {details.mobileNo}
+                  </li>
+                </ul>
+                <div className="d-flex justify-content-center">
+                  <ResetPassword />
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       )}
     </>
   );

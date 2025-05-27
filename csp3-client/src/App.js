@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import AppNavBar from './components/AppNavbar';
 import Home from './pages/Home';
 import Register from './pages/Register'
@@ -14,7 +14,8 @@ import Error from './pages/Error';
 import './App.css';
 import 'bootswatch/dist/cosmo/bootstrap.min.css';
 import { UserProvider } from './UserContext';
-import AdminView from './components/AdminView'; // <-- Add this import
+import AdminView from './components/AdminView'; // <-- Already imported
+import Footer from './components/Footer';
 
 export default function App() {
 
@@ -39,24 +40,25 @@ export default function App() {
 
     }, [])
 
-  return (
-    <UserProvider value={{user, setUser}}>
-        <Router>
-            <AppNavBar />
-            <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route exact path="/register" component={Register}/>
-                <Route exact path="/login" component={Login}/>
-                <Route exact path="/products" component={Products}/>
-                <Route exact path="/products/:productId" component={Specific}/>
-                <Route exact path="/profile" component={Profile}/>
-                <Route exact path="/cart" component={MyCart}/>
-                <Route exact path="/orders" component={Orders}/>
-                <Route exact path="/logout" component={Logout}/>
-                <Route exact path="/admin" component={AdminView}/> {/* <-- Add this line */}
-                <Route component={Error}/>
-            </Switch>
-        </Router>
-    </UserProvider>
-  );
+    return (
+        <UserProvider value={{user, setUser}}>
+            <Router>
+                <AppNavBar />
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <Route exact path="/register" component={Register}/>
+                    <Route exact path="/login" component={Login}/>
+                    <Route exact path="/products" component={Products}/>
+                    <Route exact path="/products/:productId" component={Specific}/>
+                    <Route exact path="/profile" component={Profile}/>
+                    <Route exact path="/cart" component={MyCart}/>
+                    <Route exact path="/orders" component={Orders}/>
+                    <Route exact path="/logout" component={Logout}/>
+                    <Route exact path="/admin" component={AdminView}/>
+                    <Route component={Error}/>
+                </Switch>
+                <Footer />
+            </Router>
+        </UserProvider>
+    );
 }
