@@ -13,5 +13,6 @@ router.get("/:productId", productController.getProduct)
 router.patch("/:productId", verify, verifyAdmin, productController.updateProduct)
 router.patch("/:productId/archive", verify, verifyAdmin, productController.archiveProduct)
 router.patch("/:productId/activate", verify, verifyAdmin, productController.activateProduct)
+router.delete("/:productId", verify, verifyAdmin, productController.deleteProduct);
 
 module.exports = router;

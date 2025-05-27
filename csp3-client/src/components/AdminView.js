@@ -122,7 +122,7 @@ export default function AdminView() {
       .then(data => {
         if (data.message === 'Product updated successfully') {
           Swal.fire({
-            position: "top-end",
+            position: "center", // Changed from "top-end" to "center"
             icon: "success",
             title: "Product successfully updated.",
             showConfirmButton: false,
@@ -135,7 +135,7 @@ export default function AdminView() {
           closeEdit();
         } else {
           Swal.fire({
-            position: "top-end",
+            position: "center", // Keep error alert centered as well for consistency
             icon: "error",
             title: "Something went wrong.",
             showConfirmButton: false,
@@ -364,12 +364,56 @@ export default function AdminView() {
                   Enable
                 </Button>
               }
+              <Button
+                variant="danger"
+                size="sm"
+                style={{ marginLeft: "8px" }}
+                onClick={() => handleDelete(productData._id)}
+              >
+                Delete
+              </Button>
             </td>
           </tr>
         ));
         setProducts(productsArr);
       });
   }, [products]);
+
+  // Add this function for deleting a product
+  const handleDelete = (productId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.message === "Product deleted successfully") {
+            Swal.fire('Deleted!', 'The product has been deleted.', 'success');
+            setProducts(prev =>
+              prev.filter(
+                p =>
+                  (p.key !== productId && p.props?.children?.props?._id !== productId) // for <tr key={productData._id}>
+              )
+            );
+          } else {
+            Swal.fire('Failed!', 'Unable to delete product.', 'error');
+          }
+        });
+      }
+    });
+  };
 
   return (
     <React.Fragment>

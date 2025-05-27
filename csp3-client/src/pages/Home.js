@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Button } from 'react-bootstrap';
+import Product from '../components/Product'; // Import your Product card
 
 export default function Home() {
     const pageData = {
@@ -19,15 +20,6 @@ export default function Home() {
                 setFeaturedProducts(sorted.slice(0, 5)); // Show 5 featured products
             });
     }, []);
-
-    // Helper: get product image url
-    const getImageUrl = (img) => {
-        if (!img) return '/placeholder-product.png';
-        // If img is a full url, use as-is. If it's a relative path, prepend your backend url.
-        if (img.startsWith('http')) return img;
-        // Otherwise, assume it's a path from your server's public/uploads or similar
-        return `${process.env.REACT_APP_API_URL}/${img.replace(/^\/+/, '')}`;
-    };
 
     return (
         <React.Fragment>
@@ -108,73 +100,10 @@ export default function Home() {
                           flexWrap: 'wrap'
                         }}
                     >
-                        {featuredProducts.map((product, idx) => (
-                            <Col
-                                key={product._id}
-                                xs={12}
-                                sm={6}
-                                md={2}
-                                lg={2}
-                                xl={2}
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    marginBottom: 28,
-                                    flex: "0 0 19%",
-                                    maxWidth: "19%",
-                                    margin: "0 0.5%"
-                                }}
-                            >
-                                <div
-                                    className="ua-product-card"
-                                    tabIndex={0}
-                                    style={{
-                                        width: 210,
-                                        background: '#f6f6f6',
-                                        borderRadius: 10,
-                                        boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
-                                        padding: 18,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        transition: 'transform 0.18s, box-shadow 0.18s',
-                                        cursor: 'pointer'
-                                    }}
-                                    onClick={() => window.location.href = `/products/${product._id}`}
-                                    onKeyPress={e => {
-                                        if (e.key === 'Enter') window.location.href = `/products/${product._id}`;
-                                    }}
-                                >
-                                    <img
-                                        src={getImageUrl(product.img)}
-                                        alt={product.name}
-                                        style={{ width: 110, height: 110, objectFit: 'contain', marginBottom: 16, borderRadius: 6, background: '#f6f6f6' }}
-                                    />
-                                    <div style={{ fontWeight: 600, fontSize: '1.08rem', marginBottom: 8, minHeight: 24, textAlign: 'center' }}>
-                                        {product.name}
-                                    </div>
-                                    <div style={{ color: '#444', fontSize: '0.93rem', minHeight: 36, marginBottom: 10, textAlign: 'center' }}>
-                                        {product.description?.slice(0, 70) || ''}
-                                    </div>
-                                    <div style={{ fontWeight: 600, fontSize: '1.13rem', color: '#222', marginTop: 'auto' }}>
-                                        ₱{(+product.price).toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                                    </div>
-                                </div>
-                            </Col>
+                        {featuredProducts.map((product) => (
+                            <Product key={product._id} data={product} />
                         ))}
                     </Row>
-                    {/* Hover effect styles */}
-                    <style>
-                        {`
-                          .ua-product-card:hover, .ua-product-card:focus {
-                            transform: translateY(-8px) scale(1.03);
-                            box-shadow: 0 8px 24px 0 rgba(30,79,145,0.11), 0 1.5px 6px 0 rgba(0,0,0,0.06);
-                            background: #f0f4fa;
-                            outline: none;
-                          }
-                        `}
-                    </style>
-
                     {/* Carousel pagination mock */}
                     <div style={{ margin: '30px 0 0 0', display: 'flex', justifyContent: 'center', gap: 12 }}>
                         <div style={{ width: 32, height: 4, background: '#222', borderRadius: 3, opacity: 0.9 }} />
