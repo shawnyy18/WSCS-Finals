@@ -8,7 +8,7 @@ export default function AppNavBar() {
     const history = useHistory();
 
     // Mock profile image or use user's avatar if available
-    const profileImage = 'https://media.licdn.com/dms/image/v2/C4E03AQHjtBCSlU3EuQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517244428798?e=2147483647&v=beta&t=00akjRi15AsSe_QX1rjLC3BVfruByksCyUxbtknicCc';
+    const profileImage = 'https://www.ua.edu.ph/wp-content/uploads/2017/07/UA-Logo.png';
 
     // Handle logout
     const handleLogout = () => {

@@ -17,6 +17,7 @@ import { UserProvider } from './UserContext';
 import AdminView from './components/AdminView'; // <-- Already imported
 import Footer from './components/Footer';
 
+
 export default function App() {
 
     const [user, setUser] = useState({

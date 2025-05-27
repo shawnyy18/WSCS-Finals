@@ -56,6 +56,14 @@ export default function Profile() {
               }}
             >
               <Card.Body>
+                <div className="d-flex justify-content-center mb-4">
+                  <Card.Img
+                    variant="top"
+                    src={details.profileImg || "https://via.placeholder.com/150?text=No+Image"}
+                    style={{ objectFit: 'cover', height: '150px', width: '150px', borderRadius: '50%' }}
+                    alt={(details.firstName || "") + " " + (details.lastName || "")}
+                  />
+                </div>
                 <h1 className="text-center mb-4" style={{ color: "#233787", fontWeight: 700 }}>Profile</h1>
                 <h3 className="text-center mb-3" style={{ color: "#CD2029", fontWeight: 600 }}>
                   {`${details.firstName || ''} ${details.lastName || ''}`}

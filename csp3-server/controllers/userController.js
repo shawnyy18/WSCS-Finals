@@ -23,11 +23,12 @@ module.exports.registerUser = (req,res) => {
 		// Creates a variable "newUser" and instantiates a new "User" object using the mongoose model
 		// Uses the information from the request body to provide all the necessary information
 		let newUser = new User({
-			firstName : req.body.firstName,
-			lastName : req.body.lastName,
-			email : req.body.email,
-			mobileNo : req.body.mobileNo,
-			password : bcrypt.hashSync(req.body.password, 10)
+            firstName : req.body.firstName,
+            lastName : req.body.lastName,
+            email : req.body.email,
+            mobileNo : req.body.mobileNo,
+            password : bcrypt.hashSync(req.body.password, 10),
+            profileImg: req.body.profileImg // <-- add this line
 		})
 		// Saves the created object to our database
 		newUser.save()

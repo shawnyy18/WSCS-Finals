@@ -15,6 +15,7 @@ export default function Register(){
     const [error2, setError2] = useState(true);
     const [isActive, setIsActive] = useState(false);
     const [willRedirect, setWillRedirect] = useState(false);
+    const [profileImg, setProfileImg] = useState("");
 
     useEffect(() => {
 
@@ -56,7 +57,8 @@ export default function Register(){
                 lastName: lastName,
                 email: email,
                 mobileNo: mobileNo,
-                password: password1
+                password: password1,
+                profileImg: profileImg
             })
         })
         .then(res => res.json())
@@ -180,6 +182,17 @@ export default function Register(){
                                             placeholder="Verify your password"
                                             value={password2}
                                             onChange={e => setPassword2(e.target.value)}
+                                            required
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group controlId="profileImg">
+                                        <Form.Label>Profile Image URL:</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Paste image URL"
+                                            value={profileImg}
+                                            onChange={e => setProfileImg(e.target.value)}
                                             required
                                         />
                                     </Form.Group>

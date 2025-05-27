@@ -24,6 +24,11 @@ const mongoose = require('mongoose');
 			type: Boolean,
 			default: false
 		},
+		profileImg: {
+			type: String,
+			required: [true, 'Profile Image is Required'],
+			default: ""
+		},
 		mobileNo: {
 			type: String,
 			required: [true, 'Mobile Number is Required']
