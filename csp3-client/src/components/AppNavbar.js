@@ -46,17 +46,6 @@ export default function AppNavBar() {
                         >
                             Products
                         </Nav.Link>
-                        {user.isAdmin && (
-                            <Nav.Link
-                                as={NavLink}
-                                exact
-                                to="/admin"
-                                activeClassName="active"
-                                style={{ fontSize: 20, marginLeft: 8, color: '#FFF' }}
-                            >
-                                Admin Panel
-                            </Nav.Link>
-                        )}
                     </Nav>
                     <Nav className="ms-auto" style={{ alignItems: 'center' }}>
                         {user.id ? (
